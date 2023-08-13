@@ -41,6 +41,7 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "script_pokemon_util.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -1120,6 +1121,41 @@ void ItemUseInBattle_EnigmaBerry(u8 taskId)
         ItemUseOutOfBattle_CannotUse(taskId);
         break;
     }
+}
+
+
+// setvar VAR_0x8000 2 ->numero de cargas que tiene
+// callnative SetNumTotalUsePokeVial -> cambiar el numero de cargas totales
+// callnative SetNumUsePokeVial -> recargar el pokevial
+void ItemUseOutOfBattle_PokeVial(u8 taskId)
+{
+
+        if(gSaveBlock1Ptr->pokeVial.numUses > 0)
+        {
+            gSaveBlock1Ptr->pokeVial.numUses -= 1;
+            HealPlayerParty();
+            ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1Ptr->pokeVial.numUses, STR_CONV_MODE_LEFT_ALIGN, 3);
+            StringExpandPlaceholders(gStringVar4, gText_PokeVial);
+            if (gTasks[taskId].tUsingRegisteredKeyItem)
+                DisplayItemMessageOnField(taskId, gStringVar4, Task_CloseCantUseKeyItemMessage);
+            else
+                DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
+
+        }else{
+            if (gTasks[taskId].tUsingRegisteredKeyItem)
+                DisplayItemMessageOnField(taskId, gText_WithOutUsesPokeVial, Task_CloseCantUseKeyItemMessage);
+            else
+                DisplayItemMessage(taskId, FONT_NORMAL, gText_WithOutUsesPokeVial, CloseItemMessage);
+        }
+    
+}
+
+void SetNumTotalUsePokeVial(){
+    gSaveBlock1Ptr->pokeVial.numTotalUses = VarGet(VAR_0x8000);
+}
+
+void SetNumUsePokeVial(){
+    gSaveBlock1Ptr->pokeVial.numUses = gSaveBlock1Ptr->pokeVial.numTotalUses;
 }
 
 void ItemUseOutOfBattle_CannotUse(u8 taskId)

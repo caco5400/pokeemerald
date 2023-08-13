@@ -842,6 +842,12 @@ struct WaldaPhrase
     //u8 padding;
 };
 
+struct PokeVial
+{
+    u8 numTotalUses;
+    u8 numUses;
+};
+
 struct TrainerNameRecord
 {
     u32 trainerId;
@@ -1061,6 +1067,7 @@ struct SaveBlock1
     /*0x3D5A*/ u8 unused_3D5A[10];
     /*0x3D64*/ struct TrainerHillSave trainerHill;
     /*0x3D70*/ struct WaldaPhrase waldaPhrase;
+               struct PokeVial pokeVial;
     // sizeof: 0x3D88
 };
 

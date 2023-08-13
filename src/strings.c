@@ -253,6 +253,9 @@ const u8 gText_TheBattle[] = _("the battle");
 const u8 gText_ThePokemonList[] = _("the POKéMON LIST");
 const u8 gText_TheShop[] = _("the shop");
 const u8 gText_ThePC[] = _("the PC");
+const u8 gText_PokeVial[] = _("Salud restaurada.\nN.cargas: {STR_VAR_1}{PAUSE_UNTIL_PRESS}");
+const u8 gText_WithOutUsesPokeVial[] = _("No hay cargas\ndisponibles.{PAUSE_UNTIL_PRESS}");
+
 
 const u8 *const gBagMenu_ReturnToStrings[] =
 {
